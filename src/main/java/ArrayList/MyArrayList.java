@@ -20,4 +20,6 @@ public interface MyArrayList<T> {
 
     void sort(); // реализован
 
+    T[] randomizeTwo();
+
 }
