@@ -240,9 +240,9 @@ public class Crew<T> implements MyArrayList
             }
         //получаем номер первого студента*/
         values = rundomStudents();
-
-
+        if (values!=null)
         return values[0].toString() + "  задает вопрос  " + values[1].toString();
+        else return "Была зафиксирована попытка задать вопрос своей команде!!!";
     }
 
     private T rundomStudent()
@@ -281,7 +281,7 @@ public class Crew<T> implements MyArrayList
         if (((Intern)student[studentNum]).getCom() == ((Intern)student[studentTwo]).getCom())
         {
             System.out.println("Попали одинаковые команды...");
-            rundomStudents();
+            return null;
         }
         else
         try
