@@ -5,6 +5,11 @@ import java.util.Objects;
 public class Intern implements Comparable<Intern> {
     private String name, lastName;
     private int test1, test2;
+    private int com;
+
+    public int getCom() {
+        return com;
+    }
 
     //создаем студента из строки в текстовом файле
     public Intern(String line) {
@@ -13,6 +18,7 @@ public class Intern implements Comparable<Intern> {
         this.lastName = userLine[1];
         this.test1 = Integer.parseInt(userLine[2]);
         this.test2 = Integer.parseInt(userLine[3]);
+        this.com = Integer.parseInt(userLine[5]);
     }
 
     public Intern(String name, String lastName, int test1, int test2) {
@@ -79,6 +85,6 @@ public class Intern implements Comparable<Intern> {
     @Override
     public String toString() {
         return
-                this.getName() + " " + this.getLastName() + " | " + this.getTest1() + " | " + this.getTest2();
+                this.getName() + " " + this.getLastName() + " из команды " + this.getCom();
     }
 }
