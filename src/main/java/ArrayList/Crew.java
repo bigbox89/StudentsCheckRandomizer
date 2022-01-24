@@ -10,17 +10,38 @@ public class Crew<T> implements MyArrayList
     private static final int DEFAULT_SIZE = 10;
     private T[] student;
     private int size;
-    private List<Integer> randomizeList = new ArrayList<>();
+    private List<Integer> randomizeListV = new ArrayList<>();
+    private List<Integer> randomizeListO = new ArrayList<>();
+    
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_BLACK = "\u001B[30m";
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
+    public static final String ANSI_BLUE = "\u001B[34m";
+    public static final String ANSI_PURPLE = "\u001B[35m";
+    public static final String ANSI_CYAN = "\u001B[36m";
+    public static final String ANSI_WHITE = "\u001B[37m";
 
 
-    public List<Integer> getRandomizeList()
+    public List<Integer> getRandomizeListV()
     {
-        return randomizeList;
+        return randomizeListV;
     }
 
-    public void setRandomizeList(List<Integer> randomizeList)
+    public void setRandomizeListV(List<Integer> randomizeListV)
     {
-        this.randomizeList = randomizeList;
+        this.randomizeListV = randomizeListV;
+    }
+
+    public List<Integer> getRandomizeListO()
+    {
+        return randomizeListO;
+    }
+
+    public void setRandomizeListO(List<Integer> randomizeListO)
+    {
+        this.randomizeListO = randomizeListO;
     }
 
     public Crew() {
@@ -211,14 +232,14 @@ public class Crew<T> implements MyArrayList
     public T[] randomizeTwo()
     {
         T[] values = (T[]) new Object[2];
-        List<Integer> list = getRandomizeList();
-        int last_num = list.size();
+        List<Integer> listV = getRandomizeListV();
+        int last_num = listV.size();
 
         //добавляем номера в список
         if (last_num == 0)
             for (int y = 0; y <= size; y++)
             {
-                list.add(y);
+                listV.add(y);
             }
         //получаем номер первого студента*/
         values[0] = rundomStudent();
@@ -229,14 +250,21 @@ public class Crew<T> implements MyArrayList
     public String randomTwo()
     {
         T[] values = (T[]) new Object[2];
-        List<Integer> list = getRandomizeList();
-        int last_num = list.size();
+        List<Integer> listV = getRandomizeListV();
+        List<Integer> listO = getRandomizeListO();
+        int last_numV = listV.size();
+        int last_numO = listO.size();
 
         //добавляем номера в список
-        if (last_num == 0)
-            for (int y = 0; y <= size; y++)
+        if (last_numV == 0)
+            for (int y = 0; y < size; y++)
             {
-                list.add(y);
+                listV.add(y);
+            }
+        if (last_numO == 0)
+            for (int y = 0; y < size; y++)
+            {
+                listO.add(y);
             }
         //получаем номер первого студента*/
         values = rundomStudents();
@@ -249,19 +277,19 @@ public class Crew<T> implements MyArrayList
     {
         Integer studentNum = 0;
         Random b = new Random();
-        List<Integer> list = getRandomizeList();
+        List<Integer> listV = getRandomizeListV();
         //получаем случайный номер студента
-        int v = b.nextInt(list.size());
+        int v = b.nextInt(listV.size());
         try
         {
-            studentNum = list.get(v);
-            list.remove(v);
-            if (list.size()==0)
+            studentNum = listV.get(v);
+            listV.remove(v);
+            if (listV.size()==0)
                 {
                     System.out.println("Все варианты перебраны");
                     System.exit(0);
                 }
-            setRandomizeList(list);
+            setRandomizeListV(listV);
         }
         catch (Exception t) {}
         return student[studentNum];
@@ -269,16 +297,18 @@ public class Crew<T> implements MyArrayList
 
     private T[] rundomStudents()
     {
-        Integer studentNum = 0;
-        Integer studentTwo = 0;
+        Integer studentV = 0;
+        Integer studentO = 0;
+        Random a = new Random();
         Random b = new Random();
-        List<Integer> list = getRandomizeList();
+        List<Integer> listV = getRandomizeListV();
+        List<Integer> listO = getRandomizeListO();
         //получаем случайный номер студента
-        int v = b.nextInt(list.size());
-        int o = b.nextInt(list.size());
-        studentNum = list.get(v);
-        studentTwo = list.get(o);
-        if (((Intern)student[studentNum]).getCom() == ((Intern)student[studentTwo]).getCom())
+        int v = a.nextInt(listV.size());
+        int o = b.nextInt(listO.size());
+        studentV = listV.get(v);
+        studentO = listO.get(o);
+        if (((Intern)student[studentV]).getCom() == ((Intern)student[studentO]).getCom())
         {
             System.out.println("Попали одинаковые команды...");
             return null;
@@ -286,20 +316,26 @@ public class Crew<T> implements MyArrayList
         else
         try
         {
-            list.remove(v);
-            list.remove(o);
+            listV.remove(v);
+            listO.remove(o);
 
-            if (list.size()==0)
+            if (listV.size()==0)
             {
-                System.out.println("Все варианты перебраны");
+                System.out.println("Все студенты задали вопросы");
                 System.exit(0);
             }
-            setRandomizeList(list);
+            if (listO.size()==0)
+            {
+                System.out.println("Все студенты ответили на вопросы");
+                System.exit(0);
+            }
+            setRandomizeListV(listV);
+            setRandomizeListO(listO);
         }
         catch (Exception t) {}
         T[] values = (T[]) new Object[2];
-        values[0]=student[studentNum];
-        values[1]=student[studentTwo];
+        values[0]=student[studentV];
+        values[1]=student[studentO];
         return values;
     }
 
