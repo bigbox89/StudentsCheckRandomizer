@@ -239,8 +239,8 @@ public class Crew<T> implements MyArrayList
                 list.add(y);
             }
         //получаем номер первого студента*/
-        values[0] = rundomStudent();
-        values[1] = rundomStudent();
+        values = rundomStudents();
+
 
         return values[0].toString() + "  задает вопрос  " + values[1].toString();
     }
@@ -266,6 +266,45 @@ public class Crew<T> implements MyArrayList
         catch (Exception t) {}
         return student[studentNum];
     }
+
+    private T[] rundomStudents()
+    {
+        Integer studentNum = 0;
+        Integer studentTwo = 0;
+        Random b = new Random();
+        List<Integer> list = getRandomizeList();
+        //получаем случайный номер студента
+        int v = b.nextInt(list.size());
+        int o = b.nextInt(list.size());
+        studentNum = list.get(v);
+        studentTwo = list.get(o);
+        if (((Intern)student[studentNum]).getCom() == ((Intern)student[studentTwo]).getCom())
+        {
+            System.out.println("Попали одинаковые команды...");
+            rundomStudents();
+        }
+        else
+        try
+        {
+            list.remove(v);
+            list.remove(o);
+
+            if (list.size()==0)
+            {
+                System.out.println("Все варианты перебраны");
+                System.exit(0);
+            }
+            setRandomizeList(list);
+        }
+        catch (Exception t) {}
+        T[] values = (T[]) new Object[2];
+        values[0]=student[studentNum];
+        values[1]=student[studentTwo];
+        return values;
+    }
+
+
+
 
     /**
      * Печать в консоль данных студента
