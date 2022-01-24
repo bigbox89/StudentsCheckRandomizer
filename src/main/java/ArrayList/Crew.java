@@ -1,22 +1,25 @@
 package ArrayList;
 
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Crew<T> implements MyArrayList {
+public class Crew<T> implements MyArrayList
+{
     private static final int DEFAULT_SIZE = 10;
     private T[] student;
     private int size;
-    private int randomizeListSize;
     private List<Integer> randomizeList = new ArrayList<>();
 
 
-    public List<Integer> getRandomizeList() {
+    public List<Integer> getRandomizeList()
+    {
         return randomizeList;
     }
 
-    public void setRandomizeList(List<Integer> randomizeList) {
+    public void setRandomizeList(List<Integer> randomizeList)
+    {
         this.randomizeList = randomizeList;
     }
 
@@ -205,33 +208,62 @@ public class Crew<T> implements MyArrayList {
     }
 
     @Override
-    public T[] randomizeTwo() {
-        T[] values = (T[]) new Object[2];;
+    public T[] randomizeTwo()
+    {
+        T[] values = (T[]) new Object[2];
         List<Integer> list = getRandomizeList();
         int last_num = list.size();
+
         //добавляем номера в список
         if (last_num == 0)
-            for (int y = 0; y <= size+1; y++) {
+            for (int y = 0; y <= size; y++)
+            {
                 list.add(y);
             }
-        //получаем номер первого студента
+        //получаем номер первого студента*/
         values[0] = rundomStudent();
         values[1] = rundomStudent();
         return values;
     }
 
-    private T rundomStudent() {
+    public String randomTwo()
+    {
+        T[] values = (T[]) new Object[2];
+        List<Integer> list = getRandomizeList();
+        int last_num = list.size();
+
+        //добавляем номера в список
+        if (last_num == 0)
+            for (int y = 0; y <= size; y++)
+            {
+                list.add(y);
+            }
+        //получаем номер первого студента*/
+        values[0] = rundomStudent();
+        values[1] = rundomStudent();
+
+        return values[0].toString() + "  задает вопрос  " + values[1].toString();
+    }
+
+    private T rundomStudent()
+    {
         Integer studentNum = 0;
         Random b = new Random();
         List<Integer> list = getRandomizeList();
         //получаем случайный номер студента
         int v = b.nextInt(list.size());
-        try {
+        try
+        {
             studentNum = list.get(v);
             list.remove(v);
+            if (list.size()==0)
+                {
+                    System.out.println("Все варианты перебраны");
+                    System.exit(0);
+                }
             setRandomizeList(list);
-        } catch (Exception t) {
         }
+        catch (Exception t) {}
         return student[studentNum];
     }
 
