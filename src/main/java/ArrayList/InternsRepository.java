@@ -27,6 +27,4 @@ public class InternsRepository {
     public Crew<Intern> getAllInterns() throws FileNotFoundException {
         return getInternsFromFile();
     }
-
-
 }

@@ -1,18 +1,16 @@
 package ArrayList;
 
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Crew<T> implements MyArrayList
-{
+public class Crew<T> implements MyArrayList {
     private static final int DEFAULT_SIZE = 10;
     private T[] student;
     private int size;
     private List<Integer> randomizeListV = new ArrayList<>();
     private List<Integer> randomizeListO = new ArrayList<>();
-    
+
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_BLACK = "\u001B[30m";
     public static final String ANSI_RED = "\u001B[31m";
@@ -23,24 +21,19 @@ public class Crew<T> implements MyArrayList
     public static final String ANSI_CYAN = "\u001B[36m";
     public static final String ANSI_WHITE = "\u001B[37m";
 
-
-    public List<Integer> getRandomizeListV()
-    {
+    public List<Integer> getRandomizeListV() {
         return randomizeListV;
     }
 
-    public void setRandomizeListV(List<Integer> randomizeListV)
-    {
+    public void setRandomizeListV(List<Integer> randomizeListV) {
         this.randomizeListV = randomizeListV;
     }
 
-    public List<Integer> getRandomizeListO()
-    {
+    public List<Integer> getRandomizeListO() {
         return randomizeListO;
     }
 
-    public void setRandomizeListO(List<Integer> randomizeListO)
-    {
+    public void setRandomizeListO(List<Integer> randomizeListO) {
         this.randomizeListO = randomizeListO;
     }
 
@@ -229,16 +222,14 @@ public class Crew<T> implements MyArrayList
     }
 
     @Override
-    public T[] randomizeTwo()
-    {
+    public T[] randomizeTwo() {
         T[] values = (T[]) new Object[2];
         List<Integer> listV = getRandomizeListV();
         int last_num = listV.size();
 
         //добавляем номера в список
         if (last_num == 0)
-            for (int y = 0; y <= size; y++)
-            {
+            for (int y = 0; y <= size; y++) {
                 listV.add(y);
             }
         //получаем номер первого студента*/
@@ -247,8 +238,7 @@ public class Crew<T> implements MyArrayList
         return values;
     }
 
-    public String randomTwo()
-    {
+    public String randomTwo() {
         T[] values = (T[]) new Object[2];
         List<Integer> listV = getRandomizeListV();
         List<Integer> listO = getRandomizeListO();
@@ -257,46 +247,40 @@ public class Crew<T> implements MyArrayList
 
         //добавляем номера в список
         if (last_numV == 0)
-            for (int y = 0; y < size; y++)
-            {
+            for (int y = 0; y < size; y++) {
                 listV.add(y);
             }
         if (last_numO == 0)
-            for (int y = 0; y < size; y++)
-            {
+            for (int y = 0; y < size; y++) {
                 listO.add(y);
             }
         //получаем номер первого студента*/
         values = rundomStudents();
-        if (values!=null)
-        return values[0].toString() + "  задает вопрос  " + values[1].toString();
+        if (values != null)
+            return values[0].toString() + "  задает вопрос  " + values[1].toString();
         else return "Была зафиксирована попытка задать вопрос своей команде!!!";
     }
 
-    private T rundomStudent()
-    {
+    private T rundomStudent() {
         Integer studentNum = 0;
         Random b = new Random();
         List<Integer> listV = getRandomizeListV();
         //получаем случайный номер студента
         int v = b.nextInt(listV.size());
-        try
-        {
+        try {
             studentNum = listV.get(v);
             listV.remove(v);
-            if (listV.size()==0)
-                {
-                    System.out.println("Все варианты перебраны");
-                    System.exit(0);
-                }
+            if (listV.size() == 0) {
+                System.out.println("Все варианты перебраны");
+                System.exit(0);
+            }
             setRandomizeListV(listV);
+        } catch (Exception t) {
         }
-        catch (Exception t) {}
         return student[studentNum];
     }
 
-    private T[] rundomStudents()
-    {
+    private T[] rundomStudents() {
         Integer studentV = 0;
         Integer studentO = 0;
         Random a = new Random();
@@ -308,39 +292,31 @@ public class Crew<T> implements MyArrayList
         int o = b.nextInt(listO.size());
         studentV = listV.get(v);
         studentO = listO.get(o);
-        if (((Intern)student[studentV]).getCom() == ((Intern)student[studentO]).getCom())
-        {
+        if (((Intern) student[studentV]).getCom() == ((Intern) student[studentO]).getCom()) {
             System.out.println("Попали одинаковые команды...");
             return null;
-        }
-        else
-        try
-        {
-            listV.remove(v);
-            listO.remove(o);
+        } else
+            try {
+                listV.remove(v);
+                listO.remove(o);
 
-            if (listV.size()==0)
-            {
-                System.out.println("Все студенты задали вопросы");
-                System.exit(0);
+                if (listV.size() == 0) {
+                    System.out.println("Все студенты задали вопросы");
+                    System.exit(0);
+                }
+                if (listO.size() == 0) {
+                    System.out.println("Все студенты ответили на вопросы");
+                    System.exit(0);
+                }
+                setRandomizeListV(listV);
+                setRandomizeListO(listO);
+            } catch (Exception t) {
             }
-            if (listO.size()==0)
-            {
-                System.out.println("Все студенты ответили на вопросы");
-                System.exit(0);
-            }
-            setRandomizeListV(listV);
-            setRandomizeListO(listO);
-        }
-        catch (Exception t) {}
         T[] values = (T[]) new Object[2];
-        values[0]=student[studentV];
-        values[1]=student[studentO];
+        values[0] = student[studentV];
+        values[1] = student[studentO];
         return values;
     }
-
-
-
 
     /**
      * Печать в консоль данных студента
